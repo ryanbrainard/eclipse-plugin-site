@@ -1,7 +1,9 @@
-@(message: String)
+@(installCount: String)
 
-@main("Welcome to Play 2.0") {
-    
-    @play20.welcome(message, style = "Java")
-    
+@main("Heroku Eclipse Plugin") {
+    <div class="span9 offset1">
+		<div class="alert alert-success">
+  			Installs to date - <span class="badge badge-success">@installCount</span> 
+		</div>
+	</div>
 }

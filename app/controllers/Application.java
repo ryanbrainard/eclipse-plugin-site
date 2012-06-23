@@ -26,7 +26,16 @@ public class Application extends Controller {
 	private static final String FILE_TO_MATCH = System.getenv("FILE_TO_MATCH")==null?"site.xml":System.getenv("FILE_TO_MATCH");
 	private static final String PLUGIN_INSTALL_COUNT = "install_count";
 	public static Result index() {
-		return ok(index.render("Your new application is ready."));
+		JedisPool pool = poolFactory.getPool();
+	    Jedis jedis = pool.getResource();
+	    Integer installCount=0;
+	    try{
+	    	installCount = Integer.valueOf(jedis.get(PLUGIN_INSTALL_COUNT));
+		}finally{
+			pool.returnResource(jedis);
+		}
+	    System.out.println(">>>>>>>>>install count:"+installCount);
+		return ok(index.render(String.valueOf(installCount)));
 	}
 
 	public static Result install(String file) {
