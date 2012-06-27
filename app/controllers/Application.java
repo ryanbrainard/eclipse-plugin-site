@@ -25,6 +25,10 @@ public class Application extends Controller {
 	public static JedisPoolFactory poolFactory = new JedisPoolFactory();
 	private static final String FILE_TO_MATCH = System.getenv("FILE_TO_MATCH")==null?"site.xml":System.getenv("FILE_TO_MATCH");
 	private static final String PLUGIN_INSTALL_COUNT = "install_count";
+	private static final String REQUESTOR = "requestor";
+	private static final String X_FORWARDED_FOR = "X-FORWARDED-FOR";
+	private static final String USER_AGENT="USER-AGENT";
+	
 	public static Result index() {
 		JedisPool pool = poolFactory.getPool();
 	    Jedis jedis = pool.getResource();
@@ -45,13 +49,14 @@ public class Application extends Controller {
 			if(file.equalsIgnoreCase(FILE_TO_MATCH)){
 				jedis.incr(PLUGIN_INSTALL_COUNT);
 				PluginInstallInfo installInfo = new PluginInstallInfo(	new Date().getTime(),
-																		request().headers().get("X-FORWARDED-FOR")[0],
-																		request().headers().get("USER-AGENT")[0]);
+																		request().headers().get(X_FORWARDED_FOR)[0],
+																		request().headers().get(USER_AGENT)[0]);
 				ObjectMapper mapper = new ObjectMapper();
 				ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
 				try {
 					mapper.writeValue(byteOut, installInfo);
-					jedis.set(	java.util.UUID.randomUUID().toString(), 
+					jedis.hset(	REQUESTOR,
+								java.util.UUID.randomUUID().toString(), 
 								new String(byteOut.toByteArray()));
 				} catch (JsonGenerationException e) {
 					System.out.println(String.format("install-error %s", e.getMessage()));
