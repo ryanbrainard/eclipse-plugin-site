@@ -3,11 +3,13 @@ package dto;
 public class PluginInstallInfo {
 
 	private Long installDt;
-	private String hostName;
-	public PluginInstallInfo(Long installDt, String hostName) {
+	private String requestorIP;
+	private String userAgent;
+	public PluginInstallInfo(Long installDt, String ipAddr,String userAgent) {
 		super();
 		this.installDt = installDt;
-		this.hostName = hostName;
+		this.requestorIP = ipAddr;
+		this.userAgent=userAgent;
 	}
 	public Long getInstallDt() {
 		return installDt;
@@ -15,16 +17,22 @@ public class PluginInstallInfo {
 	public void setInstallDt(Long installDt) {
 		this.installDt = installDt;
 	}
-	public String getHostName() {
-		return hostName;
+	public String getRequestorIP() {
+		return requestorIP;
 	}
-	public void setHostName(String hostName) {
-		this.hostName = hostName;
+	public void setRequestorIP(String hostName) {
+		this.requestorIP = hostName;
+	}
+	public String getUserAgent() {
+		return userAgent;
+	}
+	public void setUserAgent(String userAgent) {
+		this.userAgent = userAgent;
 	}
 	@Override
 	public String toString() {
 		return "PluginInstallInfo [installDt=" + installDt + ", hostName="
-				+ hostName + "]";
+				+ requestorIP + "]";
 	}
 	
 }

@@ -26,13 +26,6 @@ public class Application extends Controller {
 	private static final String FILE_TO_MATCH = System.getenv("FILE_TO_MATCH")==null?"site.xml":System.getenv("FILE_TO_MATCH");
 	private static final String PLUGIN_INSTALL_COUNT = "install_count";
 	public static Result index() {
-		for( Entry<String,String[]> hdr:request().headers().entrySet()){
-			String val="";
-			for(String hdrVal:hdr.getValue()){
-				val+=";"+hdrVal;
-			}
-			System.out.println(String.format(">>>>>>>>>>>>>>Key:%s,Value=%s",hdr.getKey(),val));
-		}
 		JedisPool pool = poolFactory.getPool();
 	    Jedis jedis = pool.getResource();
 	    Integer installCount=0;
@@ -41,7 +34,6 @@ public class Application extends Controller {
 		}finally{
 			pool.returnResource(jedis);
 		}
-	    System.out.println(">>>>>>>>>install count:"+installCount);
 		return ok(index.render(String.valueOf(installCount)));
 	}
 
@@ -52,14 +44,9 @@ public class Application extends Controller {
 		try{
 			if(file.equalsIgnoreCase(FILE_TO_MATCH)){
 				jedis.incr(PLUGIN_INSTALL_COUNT);
-				for( Entry<String,String[]> hdr:request().headers().entrySet()){
-					String val="";
-					for(String hdrVal:hdr.getValue()){
-						val+=";"+hdrVal;
-					}
-					System.out.println(String.format(">>>>>>>>>>>>>>Key:%s,Value=%s",hdr.getKey(),val));
-				}
-				PluginInstallInfo installInfo = new PluginInstallInfo(new Date().getTime(),request().headers().get("HOST")[0]);
+				PluginInstallInfo installInfo = new PluginInstallInfo(	new Date().getTime(),
+																		request().headers().get("X-FORWARDED-FOR")[0],
+																		request().headers().get("USER-AGENT")[0]);
 				ObjectMapper mapper = new ObjectMapper();
 				ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
 				try {
