@@ -9,17 +9,19 @@ import java.util.Map.Entry;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.node.ObjectNode;
 
 import dto.PluginInstallInfo;
 
 import play.*;
+import play.libs.Json;
 import play.mvc.*;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 import utils.JedisPoolFactory;
 import views.html.*;
-
+import play.mvc.BodyParser;
 public class Application extends Controller {
 	
 	public static JedisPoolFactory poolFactory = new JedisPoolFactory();
@@ -39,6 +41,22 @@ public class Application extends Controller {
 			pool.returnResource(jedis);
 		}
 		return ok(index.render(String.valueOf(installCount)));
+	}
+	
+	@BodyParser.Of(BodyParser.Json.class)
+	public static Result installCount(){
+		JedisPool pool = poolFactory.getPool();
+	    Jedis jedis = pool.getResource();
+	    Integer installCount=0;
+	    ObjectNode result = Json.newObject();
+	    try{
+	    	installCount = Integer.valueOf(jedis.get(PLUGIN_INSTALL_COUNT));
+	    	result.put("installCount",installCount);
+		}finally{
+			pool.returnResource(jedis);
+		}
+	    return ok(result);
+		
 	}
 
 	public static Result install(String file) {

@@ -13,46 +13,304 @@
 	    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
 	    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet">
 	    <link href="http://twitter.github.com/bootstrap/assets/js/google-code-prettify/prettify.css" rel="stylesheet">
-	
-	    <!--
-	      IMPORTANT:
-	      This is Heroku specific styling. Remove to customize.
-	    -->
 	    <link href="http://heroku.github.com/template-app-bootstrap/heroku.css" rel="stylesheet">
-	    <!-- /// -->
 	    <style>
-	    body {
-			padding-top: 60px;
-		}
-		
-		.badge{
-			font-size:14px;
-		}
-		
-		.alert,.label{
-			font-size:16px;
-		} 
+		    body {
+				padding-top: 45px;
+			}
+			.sidebar-nav {
+	        	padding: 5px 0;
+	      	}
+			
+			.badge{
+				font-size:12px;
+			}
+			
+			.alert,.label{
+				font-size:12px;
+			} 
+			
+			.hero-unit{
+				padding:30px;
+			}
+			.hero-unit p{
+				font-size:14px;
+			}
+			.navbar-fixed-top,.navbar-inner{
+			    height:30px;
+			}
+			
+			.section-hdr{
+				border-bottom-color:#CCC;
+				border-bottom-style: solid;
+				border-bottom-width: 2px;
+			}
+			.subsection-hdr{
+				border-bottom-color:#CCC;
+				border-bottom-style: solid;
+				border-bottom-width: 1px;
+			}
+			
+			.instructions li {
+				margin-bottom: 10px;
+			}
+			
+			  .screenshot {
+		        margin-top: 10px;
+		        display:block;
+		      }
+		      .screenshot a {
+		        padding: 0;
+		        line-height: 1;
+		        display: inline-block;
+		        text-decoration: none;
+		      }
+		      .screenshot img, .tool-choice img {
+		        border: 1px solid #ddd;
+		        -webkit-border-radius: 4px;
+		        -moz-border-radius: 4px;
+		        border-radius: 4px;
+		        -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+		        -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+		        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+		      }
+		      .nav-header{
+				border-bottom-color:#CCC;
+				border-bottom-style: solid;
+				border-bottom-width: 1px;
+		      	
+		      }
 	    </style>
 	</head>
 
     <body>
-		<div class="navbar navbar-fixed-top">
-		    <div class="navbar-inner">
-		        <div class="container">
-		            <a href="/" class="brand">Heroku-Eclipse Integration</a>
-		            <a href="/" class="brand" id="heroku">by <strong>heroku</strong></a>
-		        </div>
-		    </div>
-		</div>
-    
-		<div class="container">
-		    @content
-		</div>
-		        
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">Heroku-Eclipse Integration</a>
+          <div class="btn-group pull-right">
+          	<a href="/" class="brand"></a>
+		    <a href="/" class="brand" id="heroku">by <strong>heroku</strong></a>
+          </div>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="active"><a href="/">Home</a></li>
+              <li><a target="_blank" href="https://github.com/heroku/heroku-eclipse-plugin">View project on GitHub</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+ 		  @content
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header"><a href="#installAndSetup">Installation & Setup</a></li>
+              <li><a href="#prereqs">Pre-requisites</a></li>
+              <li><a href="#install">Installation</a></li>
+              <li><a href="#apiKey">API Key setup</a></li>
+              <li><a href="#sshKeyCreate">Creating a SSH key</a></li>
+              <li><a href="#sshKeyHeroku">Adding your SSH to Heroku</a></li>
+              <li class="nav-header">Creating new App</li>
+              <li><a href="#">Create from Template</a></li>
+              <li><a href="#">Deploying changes to Heroku</a></li>
+              <li class="nav-header">Import an existing App</li>
+              <li><a href="#">Import from "My Apps"</a></li>
+              <li><a href="#">Deploying changes to Heroku</a></li>
+              <li class="nav-header">Managing your Apps</li>
+              <li><a href="#">View all your Heroku apps</a></li>
+              <li><a href="#">View Appication info</a></li>
+              <li><a href="#">Renaming an App</a></li>
+              <li><a href="#">Adding Collabortors</a></li>
+              <li><a href="#">Adding Environment Variables</a></li>
+              <li><a href="#">Destroying an app</a></li>
+              <li><a href="#">Viewing your app</a></li>
+              <li><a href="#">Viewing Application processes</a></li>
+              <li><a href="#">Restarting your app</a></li>
+              <li><a href="#">Viewing Application logs</a></li>
+              <li><a href="#">Scaling your app</a></li>
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
+        <div class="span9">
+          <div class="hero-unit">
+            <h2>Heroku - Eclipse Integration</h2>
+            <p>Great news for Heroku developers who use Eclipse IDE for their development. We now have an integrated experience 
+            that allows you to develop and manage alll your Heroku apps right from Eclipse.</a></p>
+          </div>
+          <div class="row-fluid instructions">
+            <h2 class="section-hdr"><a name="installAndSetup">Installation & Setup</a></h2>
+            <h3 class="subsection-hdr"><a name="preqs" href="#">Pre-requisites</a></h3>
+            <p>In order to use this plugin, you will need the following: </p>
+            <p>
+            	<ol>
+            		<li>Eclipse v 3.7 or higher (Java or JEE edition)</li>
+            		<li>A Heroku account. Click <a href="http://api.heroku.com/signup">here sign up for an account</a></li>
+            	</ol>
+            </p>
+            <h3 class="subsection-hdr"><a name="install">Installation</a></h2>
+            <p>
+            	<ol>
+            		<li>Open Eclipse and navigate to your project workspace.</li>
+             		<li>Go to <code>Help</code> <i class="icon-chevron-right"></i><code>Install new Software</code><i class="icon-chevron-right"></i><br/>
+            		<div class="modal hide" id="helpInstall">
+                      <div class="modal-header">
+                        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
+                        <h3>Install new Plugin</h3>
+                      </div>
+                      <div class="modal-body">
+                        <img src='@routes.Assets.at("images/help-install.png")' alt="install heroku plugin"/>
+                      </div>
+                    </div>
+                    <span class="screenshot">
+                      <a href="#helpInstall" data-toggle="modal">
+                        <img src='@routes.Assets.at("images/help-install.png")' alt="install heroku plugin" width="100">
+                        <i class="icon-zoom-in"></i>
+                      </a>
+                    </span>
+            		</li> 
+            		<li>Click <code>Add</code> to add the plugin update site</li>
+            		<li>
+            		Give the update site a name (e.g. Heroku) and enter <code>http://eclipse-plugin.herokuapp.com/install</code>
+            		for the "Location" and click "Ok".
+            		<div class="modal hide" id="updateSite">
+                      <div class="modal-header">
+                        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
+                        <h3>Install new Plugin</h3>
+                      </div>
+                      <div class="modal-body">
+                        <img src='@routes.Assets.at("images/install-add.png")' alt="Add update site"/>
+                      </div>
+                    </div>
+                    <span class="screenshot">
+                      <a href="#updateSite" data-toggle="modal">
+                        <img src='@routes.Assets.at("images/install-add.png")' alt="Add update site" width="100">
+                        <i class="icon-zoom-in"></i>
+                      </a>
+                    </span>
+            		</li>
+            		<li>Select the newly added update Site, select the checkbox against the "Heroku Eclipse Integration"</li>
+            		<li>Click <code>Next</code> two times</li>
+            		<li>Accept the MIT license and click <code>Finish</code></li>
+            	</ol>
+            </p>
+            <h3 class="subsection-hdr"><a name="apiKey">API Key setup</a></h2>
+            <p>
+            	<ol>
+            		<li>Open <code>Eclipse</code><i class="icon-chevron-right"></i><code>Preferences</code></li>
+            		<li>Select <code>Heroku</code></li>
+            		<li>Enter <code>Heroku username</code> in <code>Email</code> field</li>
+            		<li>Enter your password</code> in <code>Password</code> field</li>
+            		<li>Click <code>Login</code>. If your login was successful, your Heroku API key would be populated in the 
+            		<code>API Key</code> field.<br/>
+            		<span class="label label-info" style="font-size:10px;">Note:</span>&nbsp;If you know your API key, you can paste your API key directly into 
+            		the <code>API Key</code> field.
+            		</li>
+            		<li>Click <code>Login</code> to validate your API key. 
+            		You should see a <code>Validation of your API key was successful!</code> message at the top of the preferences window
+            		<div class="modal hide" id="apiPreferences">
+                      <div class="modal-header">
+                        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
+                        <h3>Setup API Key</h3>
+                      </div>
+                      <div class="modal-body">
+                        <img src='@routes.Assets.at("images/heroku_preferences.png")' alt="setup api key"/>
+                      </div>
+                    </div>
+                    <span class="screenshot">
+                      <a href="#apiPreferences" data-toggle="modal">
+                        <img src='@routes.Assets.at("images/heroku_preferences.png")' alt="setup api key" width="100">
+                        <i class="icon-zoom-in"></i>
+                      </a>
+                    </span>
+            		</li> 
+            		
+            	</ol>
+            </p>
+            <h3 class="subsection-hdr"><a name="sshKeyCreate">Create a SSH Key</a></h2>
+            <p style="padding-top:5px;"><span class="label label-warning" style="font-size:10px;">Note:</span>&nbsp;If you already have a SSH key that you use
+            with your Heroku account, you can skip this step.
+            </p>
+            <p>
+            In order to deploy your code to Heroku, the plugin uses <a href="#">Git</a>. The plugin depends on the <a href=#">eGit</a> eclipse
+            plugin for all Git related tasks. A SSH key is required in order for eGit to communicate with Heroku. You will need to 
+            setup this the first time you build an app on Heroku. First you will need to generate a new SSH key. 
+            Follow the below steps to generate a new key
+           
+            </p>
+            <p>
+            	<ol>
+                  <li>Go to <code>Eclipse</code> <i class="icon-chevron-right"></i> <code>Preferences</code> <i class="icon-chevron-right"></i> <code>General</code> <i class="icon-chevron-right"></i> <code>Network Connections</code> <i class="icon-chevron-right"></i> <code>SSH2</code></li>
+                  <li>Choose the <code>Key Management</code> tab</li>
+                  <li>Click <code>Generate RSA Key...</code>
+                    <div class="modal hide" id="addingSshKey">
+                      <div class="modal-header">
+                        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
+                        <h3>Generate RSA Key</h3>
+                      </div>
+                      <div class="modal-body">
+                        <img src="https://s3.amazonaws.com/template-app-instructions-screenshots/eclipse/2-3-adding-ssh-key.png" alt="SSH Eclipse Preferences Window" />
+                      </div>
+                    </div>
+                    <span class="screenshot">
+                      <a href="#addingSshKey" data-toggle="modal">
+                        <img src="https://s3.amazonaws.com/template-app-instructions-screenshots/eclipse/2-3-adding-ssh-key.png" alt="SSH Eclipse Preferences Window" width="100" />
+                        <i class="icon-zoom-in"></i>
+                      </a>
+                    </span>
+                  </li>
+         		  <li>Click <code>Save Private Key...</code>, accepting the defaults</li>
+                  <li>Click <code>Ok</code></li>
+         		
+            	</ol>
+            </p>            
+            <h3 class="subsection-hdr"><a name="sshKeyHeroku">Adding your SSH Key to Heroku</a></h2>
+             <p>
+            	<ol>
+            		<li>Open <code>Eclipse</code><i class="icon-chevron-right"></i><code>Preferences</code></li>
+            		<li>Select <code>Heroku</code></li>
+					<li>In the SSH Key section, click <code>Generate</code> if you need to generate a new key.
+					If you have previously generated & saved a SSH key is automatically loaded from the default location.<br/>
+					<span class="label label-warning" style="font-size:10px;">Note:</span>&nbsp;You can also copy-paste your public key
+					into the text area if you do like to use your own SSH key.
+					</li>
+					<li>Click on <code>Add</code> to add your SSH Key to Heroku
+	                   <div class="modal hide" id="sshkeyadd">
+	                      <div class="modal-header">
+	                        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
+	                        <h3>Add SSH Key to Heroku</h3>
+	                      </div>
+	                      <div class="modal-body">
+	                        <img src='@routes.Assets.at("images/heroku_ssh_add.png")' alt="Add SSH Key to Heroku" />
+	                      </div>
+	                    </div>
+	                    <span class="screenshot">
+	                      <a href="#sshkeyadd" data-toggle="modal">
+	                        <img src='@routes.Assets.at("images/heroku_ssh_add.png")' alt="Add SSH Key to Heroku" width="100" />
+	                        <i class="icon-zoom-in"></i>
+	                      </a>
+	                    </span>
+                  	</li>
+            	</ol>
+            </p>            
+          </div>
+        </div><!--/span-->
+      </div><!--/row-->
+
+      <hr>
+
+    </div><!--/.fluid-container-->
     </body>
-<script src="http://twitter.github.com/bootstrap/assets/js/jquery.js"></script>
-<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-tab.js"></script>
-<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-modal.js"></script>
-<script src="http://twitter.github.com/bootstrap/assets/js/google-code-prettify/prettify.js"></script>
+	<script src="http://twitter.github.com/bootstrap/assets/js/jquery.js"></script>
+	<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-tab.js"></script>
+	<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-modal.js"></script>
+	<script src="http://twitter.github.com/bootstrap/assets/js/google-code-prettify/prettify.js"></script>
 
 </html>
