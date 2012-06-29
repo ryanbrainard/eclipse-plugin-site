@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/com.heroku.eclipse.feature_0.1.0.201206271451.jar" id="com.heroku.eclipse.feature" version="0.1.0.201206271451">
+   <feature url="features/com.heroku.eclipse.feature_0.1.0.201205281351.jar" id="com.heroku.eclipse.feature" version="0.1.0.201205281351">
       <category name="heroku"/>
    </feature>
    <category-def name="heroku" label="Heroku Eclipse Integration"/>
