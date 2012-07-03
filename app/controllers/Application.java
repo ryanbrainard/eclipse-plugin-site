@@ -3,15 +3,26 @@ package controllers;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ObjectNode;
 
 import dto.PluginInstallInfo;
+import dto.PluginInstallStat;
 
 import play.*;
 import play.libs.Json;
@@ -30,17 +41,45 @@ public class Application extends Controller {
 	private static final String REQUESTOR = "requestor";
 	private static final String X_FORWARDED_FOR = "X-FORWARDED-FOR";
 	private static final String USER_AGENT="USER-AGENT";
-	
-	public static Result index() {
+	private static final SimpleDateFormat MMDDYYYY = new SimpleDateFormat("MMddyyyy");
+	public static Result index() throws JsonProcessingException, IOException {
 		JedisPool pool = poolFactory.getPool();
 	    Jedis jedis = pool.getResource();
 	    Integer installCount=0;
+	    String dailyStats;
+	    Set<String> requestorIPs = new HashSet<String>();
+	    
 	    try{
-	    	installCount = Integer.valueOf(jedis.get(PLUGIN_INSTALL_COUNT));
+	    	List<PluginInstallInfo> installs = getInstallsToDate(jedis.hvals(REQUESTOR));
+		    for(PluginInstallInfo install:installs ){
+		    	
+		    	if(!requestorIPs.contains(install.getRequestorIP())){
+		    		requestorIPs.add(install.getRequestorIP());
+		    	}
+		    }
+	    	installCount = requestorIPs.size();
 		}finally{
 			pool.returnResource(jedis);
 		}
 		return ok(index.render(String.valueOf(installCount)));
+	}
+	
+	@BodyParser.Of(BodyParser.Json.class)
+	public static Result dailyStats() throws JsonProcessingException, IOException {
+		JedisPool pool = poolFactory.getPool();
+	    Jedis jedis = pool.getResource();
+	    Integer installCount=0;
+	    String dailyStats;
+	    Set<String> requestorIPs = new HashSet<String>();
+	    
+	    try{
+	    	List<PluginInstallInfo> installs = getInstallsToDate(jedis.hvals(REQUESTOR));
+		    dailyStats = getDailyInstallStats(installs);
+	    	installCount = requestorIPs.size();
+		}finally{
+			pool.returnResource(jedis);
+		}
+		return ok(dailyStats);
 	}
 	
 	@BodyParser.Of(BodyParser.Json.class)
@@ -99,6 +138,37 @@ public class Application extends Controller {
 		}finally{
 			pool.returnResource(jedis);
 		}
+		
+	}
+	
+	private static List<PluginInstallInfo> getInstallsToDate(List<String> redisData) throws JsonParseException, JsonMappingException, IOException{
+		
+		List<PluginInstallInfo> retList = new ArrayList<PluginInstallInfo>();
+		ObjectMapper mapper = new ObjectMapper();
+		for(String installData:redisData){
+			retList.add(mapper.readValue(installData, PluginInstallInfo.class));
+		}
+		return retList;
+		
+	}
+	
+	private static String getDailyInstallStats(List<PluginInstallInfo> installs) throws JsonGenerationException, JsonMappingException, IOException {
+		
+		Map<String,PluginInstallStat> dailyStats = new HashMap<String,PluginInstallStat>();
+		PluginInstallStat stat;
+		for(PluginInstallInfo install:installs){
+			stat = dailyStats.get(MMDDYYYY.format(new Date(install.getInstallDt())));
+			if(stat==null){
+				stat = new PluginInstallStat(MMDDYYYY.format(new Date(install.getInstallDt())),1);
+				dailyStats.put(MMDDYYYY.format(new Date(install.getInstallDt())),stat);
+			}else{
+				stat.incrementCount();
+			}
+		}
+		ObjectMapper mapper = new ObjectMapper();
+		ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+		mapper.writeValue(byteOut, dailyStats.values());
+		return byteOut.toString();
 		
 	}
 

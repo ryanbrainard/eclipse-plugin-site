@@ -5,8 +5,11 @@ public class PluginInstallInfo {
 	private Long installDt;
 	private String requestorIP;
 	private String userAgent;
-	public PluginInstallInfo(Long installDt, String ipAddr,String userAgent) {
+	public PluginInstallInfo(){
 		super();
+	}
+	public PluginInstallInfo(Long installDt, String ipAddr,String userAgent) {
+		this();
 		this.installDt = installDt;
 		this.requestorIP = ipAddr;
 		this.userAgent=userAgent;
