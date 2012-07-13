@@ -14,6 +14,9 @@
 	    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet">
 	    <link href="http://twitter.github.com/bootstrap/assets/js/google-code-prettify/prettify.css" rel="stylesheet">
 	    <link href="http://heroku.github.com/template-app-bootstrap/heroku.css" rel="stylesheet">
+	    <script src="http://d3js.org/d3.v2.js"></script>
+		<script src="http://twitter.github.com/bootstrap/assets/js/jquery.js"></script>
+	    
 	    <style>
 		    body {
 				padding-top: 45px;
@@ -84,6 +87,26 @@
 		      .nav-header a,.nav-header a:visited,.nav-header a:hover{
 		        color: #999;
 		      }
+		      
+			.chart div {
+			  font: 10px sans-serif;
+			  background-color: steelblue;
+			  text-align: right;
+			  padding: 3px;
+			  margin: 1px;
+			  color: white;
+			}
+			
+			.chart rect {
+			   stroke: white;
+			   fill: steelblue;
+			}
+			
+			.axis path, .axis line {
+			  fill: none;
+			  stroke: #000;
+			  shape-rendering: crispEdges;
+			}
 	    </style>
 	</head>
 
@@ -311,7 +334,6 @@
 
     </div><!--/.fluid-container-->
     </body>
-	<script src="http://twitter.github.com/bootstrap/assets/js/jquery.js"></script>
 	<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-tab.js"></script>
 	<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-modal.js"></script>
 	<script src="http://twitter.github.com/bootstrap/assets/js/google-code-prettify/prettify.js"></script>

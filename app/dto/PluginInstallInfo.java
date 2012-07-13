@@ -1,6 +1,7 @@
 package dto;
 
-public class PluginInstallInfo {
+
+public class PluginInstallInfo  implements Comparable<PluginInstallInfo>{
 
 	private Long installDt;
 	private String requestorIP;
@@ -36,6 +37,20 @@ public class PluginInstallInfo {
 	public String toString() {
 		return "PluginInstallInfo [installDt=" + installDt + ", hostName="
 				+ requestorIP + "]";
+	}
+
+	@Override
+	public int compareTo(PluginInstallInfo install) {
+		int result=0;
+		if(installDt > ((PluginInstallInfo)install).getInstallDt()){
+			result= 1;
+		}else if(installDt < ((PluginInstallInfo)install).getInstallDt()){
+			result= -1;
+		}
+//		System.out.println("current.installDt:"+new Date(this.installDt)+
+//				",comparedTo.installDt:"+new Date(install.getInstallDt())+",result="+result);
+		return result;
+		
 	}
 	
 }

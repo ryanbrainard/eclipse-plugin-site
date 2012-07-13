@@ -1,10 +1,9 @@
 package dto;
 
-public class PluginInstallStat {
+public class PluginInstallStat implements Comparable<PluginInstallStat>{
 
 	private String installDt;
 	private Integer installCount;
-	
 	
 	@Override
 	public int hashCode() {
@@ -55,5 +54,9 @@ public class PluginInstallStat {
 	public String toString() {
 		return "PluginInstallStat [installDt=" + installDt + ", installCount="
 				+ installCount + "]";
+	}
+	@Override
+	public int compareTo(PluginInstallStat o) {
+		return this.installDt.compareTo(o.getInstallDt());
 	}
 }
