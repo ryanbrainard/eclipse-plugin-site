@@ -144,24 +144,26 @@
               <li><a href="#apiKey">API Key setup</a></li>
               <li><a href="#sshKeyCreate">Creating a SSH key</a></li>
               <li><a href="#sshKeyHeroku">Adding your SSH to Heroku</a></li>
-              <li class="nav-header">Creating new App</li>
-              <li><a href="#">Create from Template</a></li>
-              <li><a href="#">Deploying changes to Heroku</a></li>
-              <li class="nav-header">Import an existing App</li>
-              <li><a href="#">Import from "My Apps"</a></li>
-              <li><a href="#">Deploying changes to Heroku</a></li>
-              <li class="nav-header">Managing your Apps</li>
-              <li><a href="#">View all your Heroku apps</a></li>
-              <li><a href="#">View Appication info</a></li>
-              <li><a href="#">Renaming an App</a></li>
-              <li><a href="#">Adding Collabortors</a></li>
-              <li><a href="#">Adding Environment Variables</a></li>
-              <li><a href="#">Destroying an app</a></li>
-              <li><a href="#">Viewing your app</a></li>
-              <li><a href="#">Viewing Application processes</a></li>
-              <li><a href="#">Restarting your app</a></li>
-              <li><a href="#">Viewing Application logs</a></li>
-              <li><a href="#">Scaling your app</a></li>
+              <li class="nav-header"><a href="#createApp">Creating new App</a></li>
+              <li><a href="#createFromTemplate">Create from Template</a></li>
+              <li><a href="#deployChanges">Deploying changes to Heroku</a></li>
+              <li class="nav-header"><a href="#importApp">Import an existing App</i></li>
+              <li><a href="#importApp1">Import an existing Heroku App</a></li>
+              <li><a href="#deployChangesImport">Deploying changes to Heroku</a></li>
+              <li class="nav-header"><a href="#manageApp">Managing your Apps</a></li>
+              <li><a href="#myApps">View all your Heroku apps</a></li>
+              <li><a href="#appInfo">View Appication info</a></li>
+              <li><a href="#appRename">Renaming an App</a></li>
+              <li><a href="#collaboratos">Adding Collabortors</a></li>
+              <li><a href="#envVars">Adding Environment Variables</a></li>
+              <li><a href="#appDestroy">Destroying an app</a></li>
+              <li><a href="#appProcesses">Viewing Application processes</a></li>
+              <li><a href="#appRestart">Restarting your App</a></li>
+              <li><a href="#appRestart">Restarting processes in your App</a></li>
+              <li><a href="#appLogs">Viewing Application logs</a></li>
+              <li><a href="#appLogs">Viewing process specific logs</a></li>
+              <li><a href="#appScale">Scaling your app</a></li>
+              <li><a href="#appScale">Scaling processes in your App</a></li>
             </ul>
           </div><!--/.well -->
         </div><!--/span-->
@@ -302,10 +304,9 @@
             	<ol>
             		<li>Open <code>Eclipse</code><i class="icon-chevron-right"></i><code>Preferences</code></li>
             		<li>Select <code>Heroku</code></li>
-					<li>In the SSH Key section, click <code>Generate</code> if you need to generate a new key.
-					If you have previously generated & saved a SSH key is automatically loaded from the default location.<br/>
-					<span class="label label-warning" style="font-size:10px;">Note:</span>&nbsp;You can also copy-paste your public key
-					into the text area if you do like to use your own SSH key.
+					<li>In the SSH Key section, click <code>Generate</code> if you need to generate a new key. 
+					If you have previously generated & saved a SSH key is automatically loaded from the default location. If it is not 
+					in the default location, click <code>Load SSH Key</code><br/>
 					</li>
 					<li>Click on <code>Add</code> to add your SSH Key to Heroku
 	                   <div class="modal hide" id="sshkeyadd">
@@ -327,6 +328,364 @@
             	</ol>
             </p>            
           </div>
+          <div class="row-fluid instructions">
+            <h2 class="section-hdr"><a name="createApp" id="createApp">Creating a new Application</a></h2>
+            <h3 class="subsection-hdr"><a name="preqs" href="#" name="createFromTemplate" id="createFromTemplate">Create from Template</a></h3>
+             <p>
+            	<ol>
+            		<li>Open <code>File</code><i class="icon-chevron-right"></i><code>New</code><i class="icon-chevron-right"></i><code>Other</code> 
+            			and expand the Heroku section
+            			<div class="modal hide" id="createapp1">
+	                      <div class="modal-header">
+	                        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
+	                        <h3>New Project</h3>
+	                      </div>
+	                      <div class="modal-body">
+	                        <img src='@routes.Assets.at("images/create_app_template_1.png")' alt="Create app from template" />
+	                      </div>
+	                    </div>
+	                    <span class="screenshot">
+	                      <a href="#createapp1" data-toggle="modal">
+	                        <img src='@routes.Assets.at("images/create_app_template_1.png")' alt="Create app from template" width="100" />
+	                        <i class="icon-zoom-in"></i>
+	                      </a>
+	                    </span>
+            		
+            		</li>
+            		<li>Select <code>Create App from Template</code></li>
+            		<li>Pick a template from the list. Optionally you can also give your new application a name. If you do not give
+            		a name, Heroku will generate a unique name for your newly created application.
+            			<div class="modal hide" id="createapp2">
+	                      <div class="modal-header">
+	                        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
+	                        <h3>Create app from template</h3>
+	                      </div>
+	                      <div class="modal-body">
+	                        <img src='@routes.Assets.at("images/create_app_template_2.png")' alt="Create app from template" />
+	                      </div>
+	                    </div>
+	                    <span class="screenshot">
+	                      <a href="#createapp2" data-toggle="modal">
+	                        <img src='@routes.Assets.at("images/create_app_template_2.png")' alt="Create app from template" width="100" />
+	                        <i class="icon-zoom-in"></i>
+	                      </a>
+	                    </span>
+					</li>
+            		<li>Click <code>Finish</code> to create a new application from the selected template. Once the application is created,
+            		the plugin will use <a href="#">eGit</a> and pull down the source code repository as a local Git Repository.  
+            			<div class="modal hide" id="createapp3">
+	                      <div class="modal-header">
+	                        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
+	                        <h3>Cloning Git repository</h3>
+	                      </div>
+	                      <div class="modal-body">
+	                        <img src='@routes.Assets.at("images/create_app_template_3.png")' alt="Git clone" />
+	                      </div>
+	                    </div>
+	                    <span class="screenshot">
+	                      <a href="#createapp3" data-toggle="modal">
+	                        <img src='@routes.Assets.at("images/create_app_template_3.png")' alt="Git clone" width="100" />
+	                        <i class="icon-zoom-in"></i>
+	                      </a>
+	                    </span>
+					</li>
+            		<li>Click <code>Finish</code> to create a new application from the selected template. Once the application is created,
+            		the plugin will use <a href="#">eGit</a> and pull down the source code repository as a local Git Repository.  
+            			<div class="modal hide" id="createapp4">
+	                      <div class="modal-header">
+	                        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
+	                        <h3>Local Project and Git Repository</h3>
+	                      </div>
+	                      <div class="modal-body">
+	                        <img src='@routes.Assets.at("images/create_app_template_4.png")' alt="Local Project and Git Repository" />
+	                      </div>
+	                    </div>
+	                    <span class="screenshot">
+	                      <a href="#createapp4" data-toggle="modal">
+	                        <img src='@routes.Assets.at("images/create_app_template_4.png")' alt="Local Project and Git Repository" width="100" />
+	                        <i class="icon-zoom-in"></i>
+	                      </a>
+	                    </span>
+					</li>
+            	</ol>
+            </p>            
+            <h3 class="subsection-hdr"><a name="preqs" href="#" name="deployChanges" id="deployChanges">Deploying changes to Heroku</a></h3>
+             <p>
+            	<ol>
+            		<li>Make the code changes and any other changes to your eclipse project.</li>
+            		<li>Once you are ready to deploy these changes, right click on the project, and go to <code>Team</code><i class="icon-chevron-right"></i>
+            		<code>Commit</code>. Enter a commit message based on the changes you made. Ensure that any new files that you added to the project
+            		are selected.
+            		    <div class="modal hide" id="commitApp">
+	                      <div class="modal-header">
+	                        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
+	                        <h3>Create app from template</h3>
+	                      </div>
+	                      <div class="modal-body">
+	                        <img src='@routes.Assets.at("images/commit_changes.png")' alt="Commit Changes" />
+	                      </div>
+	                    </div>
+	                    <span class="screenshot">
+	                      <a href="#commitApp" data-toggle="modal">
+	                        <img src='@routes.Assets.at("images/commit_changes.png")' alt="Commit Changes" width="100" />
+	                        <i class="icon-zoom-in"></i>
+	                      </a>
+	                    </span>
+            		</li>
+            		<li>Click <code>Commit</code></li>
+            		<li>Right click the <code>Project</code><i class="icon-chevron-right"></i><code>Team</code>
+            		    <i class="icon-chevron-right"></i><code>Push to Upstream</code>
+            		    <div class="modal hide" id="gitPush">
+	                      <div class="modal-header">
+	                        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
+	                        <h3>Commit changes</h3>
+	                      </div>
+	                      <div class="modal-body">
+	                        <img src='@routes.Assets.at("images/commit_changes_2.png")' alt="Git Push" />
+	                      </div>
+	                    </div>
+	                    <span class="screenshot">
+	                      <a href="#gitPush" data-toggle="modal">
+	                        <img src='@routes.Assets.at("images/commit_changes_2.png")' alt="Git Push" width="100" />
+	                        <i class="icon-zoom-in"></i>
+	                      </a>
+	                    </span>
+            		</li>
+            		<li>Heroku will now receive your locally committed changes and the perform a build based on the type of app. If the build is
+            		successful, Heroku will then deploy the changes to your App on Heroku. You will see the build output from Heroku once the
+            		changes have been successfully pushed to Heroku.
+            		    <div class="modal hide" id="gitPushSuccess">
+	                      <div class="modal-header">
+	                        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
+	                        <h3>Git push - Success</h3>
+	                      </div>
+	                      <div class="modal-body">
+	                        <img src='@routes.Assets.at("images/commit_changes_3.png")' alt="Git Push - Success" />
+	                      </div>
+	                    </div>
+	                    <span class="screenshot">
+	                      <a href="#gitPushSuccess" data-toggle="modal">
+	                        <img src='@routes.Assets.at("images/commit_changes_3.png")' alt="Git Push - Success" width="100" />
+	                        <i class="icon-zoom-in"></i>
+	                      </a>
+	                    </span>
+            		</li>             		
+            	</ol>
+            </p>            
+ 		  </div>
+ 		  <div class="row-fluid instructions">
+            <h2 class="section-hdr"><a name="importApp" id="importApp">Importing your Heroku App</a></h2>
+            <h3 class="subsection-hdr"><a href="#" name="importApp1" id="importApp1">Importing a Heroku Application</a></h3>
+             <p>
+            	<ol>
+            		<li>Open <code>File</code><i class="icon-chevron-right"></i><code>Import</code> and expand the Heroku section
+            			<div class="modal hide" id="importAppSelect">
+	                      <div class="modal-header">
+	                        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
+	                        <h3>Import App</h3>
+	                      </div>
+	                      <div class="modal-body">
+	                        <img src='@routes.Assets.at("images/import_app_1.png")' alt="Import App" />
+	                      </div>
+	                    </div>
+	                    <span class="screenshot">
+	                      <a href="#importAppSelect" data-toggle="modal">
+	                        <img src='@routes.Assets.at("images/import_app_1.png")' alt="Import App" width="100" />
+	                        <i class="icon-zoom-in"></i>
+	                      </a>
+	                    </span>
+            		
+            		</li>
+            		<li>Select <code>Existing Heroku Application</code><i class="icon-chevron-right"></i><code>Next</code></li>
+            		<li>Select the App that you want to import and click <code>Next</code>
+            			<div class="modal hide" id="importApp2">
+	                      <div class="modal-header">
+	                        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
+	                        <h3>Select App to import</h3>
+	                      </div>
+	                      <div class="modal-body">
+	                        <img src='@routes.Assets.at("images/import_app_2.png")' alt="Create app from template" />
+	                      </div>
+	                    </div>
+	                    <span class="screenshot">
+	                      <a href="#importApp2" data-toggle="modal">
+	                        <img src='@routes.Assets.at("images/import_app_2.png")' alt="Create app from template" width="100" />
+	                        <i class="icon-zoom-in"></i>
+	                      </a>
+	                    </span>
+					</li>
+            		<li>The plugin will automatically try to detect the type of project (or Eclipse Nature) to apply. If you know the type of
+            		project, you can choose "Import as General Project" and apply the relevant nature once the import operation completes.<br/>
+            		<span class="label label-info" style="font-size:10px;">Note:</span>&nbsp;If your project is a Java project using Maven,
+            		choose "Auto detected project", and it will automatically apply the Maven nature and that will take care of setting up
+            		your project and build path etc. correctly.   
+            			<div class="modal hide" id="importApp3">
+	                      <div class="modal-header">
+	                        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
+	                        <h3>Project Type selection</h3>
+	                      </div>
+	                      <div class="modal-body">
+	                        <img src='@routes.Assets.at("images/import_app_3.png")' alt="Project Type selection" />
+	                      </div>
+	                    </div>
+	                    <span class="screenshot">
+	                      <a href="#importApp3" data-toggle="modal">
+	                        <img src='@routes.Assets.at("images/import_app_3.png")' alt="Project Type selection" width="100" />
+	                        <i class="icon-zoom-in"></i>
+	                      </a>
+	                    </span>
+					</li>
+            		<li>Click <code>Finish</code> to create a new application from the selected template. Once the application is created,
+            		the plugin will use <a href="#">eGit</a> and pull down the source code repository as a local Git Repository.  
+            			<div class="modal hide" id="importApp4">
+	                      <div class="modal-header">
+	                        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
+	                        <h3>Local Project and Git Repository</h3>
+	                      </div>
+	                      <div class="modal-body">
+	                        <img src='@routes.Assets.at("images/create_app_template_4.png")' alt="Local Project and Git Repository" />
+	                      </div>
+	                    </div>
+	                    <span class="screenshot">
+	                      <a href="#importApp4" data-toggle="modal">
+	                        <img src='@routes.Assets.at("images/create_app_template_4.png")' alt="Local Project and Git Repository" width="100" />
+	                        <i class="icon-zoom-in"></i>
+	                      </a>
+	                    </span>
+					</li>
+            	</ol>
+            </p> 
+            <h3 class="subsection-hdr"><a name="preqs" href="#" name="deployChangesImport" id="deployChangesImport">Deploying changes to Heroku</a></h3>
+             <p>
+            	Once the application is imported, your project is associated with a Git Repository and you can follow the steps
+            	   	in <a href="#deployChanges">Deploying your changes</a> on how to deploy changes to your imported application.
+ 			  </p>
+           </div>
+           
+           <div class="row-fluid instructions">
+            <h2 class="section-hdr"><a name="manageApp" id="manageApp">Managing your Apps</a></h2>
+            <h3 class="subsection-hdr"><a href="#" name="myApps" id="myApps">View all your Heroku Apps</a></h3>
+             <p>
+            	<ol>
+            		<li>Open <code>Window</code><i class="icon-chevron-right"></i><code>Show View</code>
+            		<i class="icon-chevron-right"></i><code>Other</code> and expand the Heroku section.
+            			<div class="modal hide" id="viewApps">
+	                      <div class="modal-header">
+	                        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
+	                        <h3>View Heroku Apps</h3>
+	                      </div>
+	                      <div class="modal-body">
+	                        <img src='@routes.Assets.at("images/view_apps.png")' alt="View Apps" />
+	                      </div>
+	                    </div>
+	                    <span class="screenshot">
+	                      <a href="#viewApps" data-toggle="modal">
+	                        <img src='@routes.Assets.at("images/view_apps.png")' alt="View Apps" width="100" />
+	                        <i class="icon-zoom-in"></i>
+	                      </a>
+	                    </span>
+            		</li>
+            		<li>You will see a new View called "My Heroku Apps" open up that will list all your
+            		Apps associated with your Heroku account. You can sort by the application name by clicking
+            		on the "Name" header column.
+            			<div class="modal hide" id="viewApps1">
+	                      <div class="modal-header">
+	                        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
+	                        <h3>My Heroku Apps</h3>
+	                      </div>
+	                      <div class="modal-body">
+	                        <img src='@routes.Assets.at("images/my_heroku_apps.png")' alt="View Apps" />
+	                      </div>
+	                 	</div>
+	                    <span class="screenshot">
+	                      <a href="#viewApps1" data-toggle="modal">
+	                        <img src='@routes.Assets.at("images/my_heroku_apps.png")' alt="View Apps" width="100" />
+	                        <i class="icon-zoom-in"></i>
+	                      </a>
+	                    </span>
+            		
+            		</li>
+          		</ol>
+            </p> 
+            <h3 class="subsection-hdr"><a name="preqs" href="#" name="appInfo" id="appInfo">Viewing your application Info</a></h3>
+             <p>
+            	<ol>
+            		<li>In the <code>My Heroku Apps</code> view you can either double-click on a specific app or, select <code>App Info</code>
+            		from the Right click context menu.
+            		<i class="icon-chevron-right"></i><code>Other</code> and expand the Heroku section.
+               			<div class="modal hide" id="appInfo">
+	                      <div class="modal-header">
+	                        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
+	                        <h3>My Heroku Apps</h3>
+	                      </div>
+	                      <div class="modal-body">
+	                        <img src='@routes.Assets.at("images/app_info.png")' alt="View Apps" />
+	                      </div>
+	                 	</div>
+	                    <span class="screenshot">
+	                      <a href="#appInfo" data-toggle="modal">
+	                        <img src='@routes.Assets.at("images/app_info.png")' alt="View Apps" width="100" />
+	                        <i class="icon-zoom-in"></i>
+	                      </a>
+	                    </span>
+   
+               		</li>
+            		<li>Your application info will open in a new Eclipse Editor. App Info consist of 4 tabs:<br/>
+            			<ul>
+            				<li><span class="label label-info" style="font-size:10px;">Application Info</span> : Provides the name, web URL, git URL for the application</li>
+            				<li><span class="label label-info" style="font-size:10px;">Collaborators</span> Manage your collaborators for your App</li>
+            				<li><span class="label label-info" style="font-size:10px;">Environment Variables</span>: Manage your App's environment variables</li>
+            				<li><span class="label label-info" style="font-size:10px;">Processes</span>: Manage your App's processes (restart, scale etc.)
+            			</ul> 
+               			<div class="modal hide" id="appInfo2">
+	                      <div class="modal-header">
+	                        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
+	                        <h3>App Info</h3>
+	                      </div>
+	                      <div class="modal-body">
+	                        <img src='@routes.Assets.at("images/app_info_detail.png")' alt="App Info" />
+	                      </div>
+	                 	</div>
+	                    <span class="screenshot">
+	                      <a href="#appInfo2" data-toggle="modal">
+	                        <img src='@routes.Assets.at("images/app_info_detail.png")' alt="App Info" width="100" />
+	                        <i class="icon-zoom-in"></i>
+	                      </a>
+	                    </span>
+   
+               		</li>
+          		</ol>
+          	  </p>
+            <h3 class="subsection-hdr"><a name="preqs" href="#" name="appRename" id="appRename">Renaming your applicatoin Name</a></h3>
+             <p>
+            	<ol>
+            		<li>If you did not provide a name when creating the application, you can rename your application in the Application 
+            		Info window. Open the App that you want to rename.</li>
+            		<li>Go to the <code>Application Info</code> tab</li>
+            		<li>Enter a new name for your App and click <code>Rename</code>.<br/><br/>
+            		<span class="label label-warn" style="font-size:10px;">Note</span>: The name should beging with a letter and only contain letters, numbers and 
+            		dashes and have at least two characters.
+            		
+               			<div class="modal hide" id="appRename">
+	                      <div class="modal-header">
+	                        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
+	                        <h3>Rename your App</h3>
+	                      </div>
+	                      <div class="modal-body">
+	                        <img src='@routes.Assets.at("images/app_rename.png")' alt="Rename your App" />
+	                      </div>
+	                 	</div>
+	                    <span class="screenshot">
+	                      <a href="#appRename" data-toggle="modal">
+	                        <img src='@routes.Assets.at("images/app_rename.png")' alt="Rename your App" width="100" />
+	                        <i class="icon-zoom-in"></i>
+	                      </a>
+	                    </span>
+   
+               		</li>
+          		</ol>
+          	  </p>
+           </div>
         </div><!--/span-->
       </div><!--/row-->
 
