@@ -154,8 +154,9 @@
               <li><a href="#myApps">View all your Heroku apps</a></li>
               <li><a href="#appInfo">View Appication info</a></li>
               <li><a href="#appRename">Renaming an App</a></li>
-              <li><a href="#collaboratos">Adding Collabortors</a></li>
-              <li><a href="#envVars">Adding Environment Variables</a></li>
+              <li><a href="#collaborators">Managing Collabortors</a></li>
+              <li><a href	="#transferOwner">Transferring ownership of your App</a></li>
+              <li><a href="#envVars">Managing Environment Variables</a></li>
               <li><a href="#appDestroy">Destroying an app</a></li>
               <li><a href="#appProcesses">Viewing Application processes</a></li>
               <li><a href="#appRestart">Restarting your App</a></li>
@@ -613,7 +614,7 @@
             		<li>In the <code>My Heroku Apps</code> view you can either double-click on a specific app or, select <code>App Info</code>
             		from the Right click context menu.
             		<i class="icon-chevron-right"></i><code>Other</code> and expand the Heroku section.
-               			<div class="modal hide" id="appInfo">
+               			<div class="modal hide" id="appInfo1">
 	                      <div class="modal-header">
 	                        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
 	                        <h3>My Heroku Apps</h3>
@@ -623,7 +624,7 @@
 	                      </div>
 	                 	</div>
 	                    <span class="screenshot">
-	                      <a href="#appInfo" data-toggle="modal">
+	                      <a href="#appInfo1" data-toggle="modal">
 	                        <img src='@routes.Assets.at("images/app_info.png")' alt="View Apps" width="100" />
 	                        <i class="icon-zoom-in"></i>
 	                      </a>
@@ -656,7 +657,7 @@
                		</li>
           		</ol>
           	  </p>
-            <h3 class="subsection-hdr"><a name="preqs" href="#" name="appRename" id="appRename">Renaming your applicatoin Name</a></h3>
+             <h3 class="subsection-hdr"><a name="preqs" href="#" name="appRename" id="appRename">Renaming your App</a></h3>
              <p>
             	<ol>
             		<li>If you did not provide a name when creating the application, you can rename your application in the Application 
@@ -665,8 +666,7 @@
             		<li>Enter a new name for your App and click <code>Rename</code>.<br/><br/>
             		<span class="label label-warn" style="font-size:10px;">Note</span>: The name should beging with a letter and only contain letters, numbers and 
             		dashes and have at least two characters.
-            		
-               			<div class="modal hide" id="appRename">
+              			<div class="modal hide" id="appRename1">
 	                      <div class="modal-header">
 	                        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
 	                        <h3>Rename your App</h3>
@@ -676,7 +676,7 @@
 	                      </div>
 	                 	</div>
 	                    <span class="screenshot">
-	                      <a href="#appRename" data-toggle="modal">
+	                      <a href="#appRename1" data-toggle="modal">
 	                        <img src='@routes.Assets.at("images/app_rename.png")' alt="Rename your App" width="100" />
 	                        <i class="icon-zoom-in"></i>
 	                      </a>
@@ -685,6 +685,102 @@
                		</li>
           		</ol>
           	  </p>
+             <h3 class="subsection-hdr"><a name="preqs" href="#" name="collaborators" id="collaborators">Managing collaborators</a></h3>
+             <p>
+            	<ol>
+            		<li>You can share your Heroku App with other developers and collaborate with them on your on your application. The 
+            		current owner of the application is indicated by the <img src='@routes.Assets.at("images/app_owner.png")' alt="App Owner" />
+            		icon next to the collaborator.
+            		To add a new Collaborator, click on the Application in the <code>My Heroku Apps</code> view.</li>
+            		<li>Go to the <code>Collaborators</code> tab</li>
+            		<li>Click on <code>&nbsp;+&nbsp;</code> & enter the email of the Collaborator<br/>
+            		<span class="label label-info" style="font-size:10px;">Note</span>: To remove a collaborator,
+               		 click on the collaborator you want to remove, click on <code>&nbsp;-&nbsp</code> and 
+               		 click <code>Yes</code> to remove the collaborator.
+            		</li>
+            		<li>Click <code>Ok</code> to add the collaborator. The collaborator will recieve an email notification that they have been
+            		added as a collaborator to your application.
+              			<div class="modal hide" id="addCollab">
+	                      <div class="modal-header">
+	                        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
+	                        <h3>Add Collaborator</h3>
+	                      </div>
+	                      <div class="modal-body">
+	                        <img src='@routes.Assets.at("images/add_collaborator.png")' alt="Add Collaborator" />
+	                      </div>
+	                 	</div>
+	                    <span class="screenshot">
+	                      <a href="#addCollab" data-toggle="modal">
+	                        <img src='@routes.Assets.at("images/add_collaborator.png")' alt="Add Collaborator" width="100" />
+	                        <i class="icon-zoom-in"></i>
+	                      </a>
+	                    </span>
+   
+               		</li>
+               		
+          		</ol>
+          	  </p>
+             <h3 class="subsection-hdr"><a name="preqs" href="#" name="transferOwner" id="transferOwner">Transferring Ownership</a></h3>
+             <p>
+            	<ol>
+            		<li>You can transfer ownership of your application to a collaborator. Once you transfer ownership, you will not be able to
+            		manage the application when you were the owner. To tranfer ownership,click on the Application in the <code>My Heroku Apps</code> view.</li>
+            		<li>Go to the <code>Collaborators</code> tab</li>
+            		<li>Click on collaborator that you want to make the new owner</li>
+            		<li>Click on <code>Make Owner</code>
+              			<div class="modal hide" id="makeOwner1">
+	                      <div class="modal-header">
+	                        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
+	                        <h3>Transferring Ownership</h3>
+	                      </div>
+	                      <div class="modal-body">
+	                        <img src='@routes.Assets.at("images/make_owner.png")' alt="Make Owner" />
+	                      </div>
+	                 	</div>
+	                    <span class="screenshot">
+	                      <a href="#makeOwner1" data-toggle="modal">
+	                        <img src='@routes.Assets.at("images/make_owner.png")' alt="Make Owner" width="100" />
+	                        <i class="icon-zoom-in"></i>
+	                      </a>
+	                    </span>
+   
+               		</li>
+          		</ol>
+          	  </p>
+
+             <h3 class="subsection-hdr"><a name="preqs" href="#" name="envVars" id="envVars">Managing environment variables</a></h3>
+             <p>
+            	<ol>
+            		<li>It is a best practice to make any resources that your application depends on as environment variables. To add a 
+            		new environment variable, click on the Application in the <code>My Heroku Apps</code> view.</li>
+            		<li>Go to the <code>Environment Variables</code> tab</li>
+            		<li>Click on <code>&nbsp;+&nbsp;</code> & enter the environment variable key and value</li>
+            		<li>Click <code>Ok</code> to add the environment variable. <br/><br/>
+            		<span class="label label-warn" style="font-size:10px;">Note</span>: Your application will be restared everytime you add 
+            		a new environment variable.
+              			<div class="modal hide" id="addEnvVars">
+	                      <div class="modal-header">
+	                        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
+	                        <h3>Add Environment Variables</h3>
+	                      </div>
+	                      <div class="modal-body">
+	                        <img src='@routes.Assets.at("images/add_env_vars.png")' alt="Add Environment Variables" />
+	                      </div>
+	                 	</div>
+	                    <span class="screenshot">
+	                      <a href="#addEnvVars" data-toggle="modal">
+	                        <img src='@routes.Assets.at("images/add_env_vars.png")' alt="Add Environment Variables" width="100" />
+	                        <i class="icon-zoom-in"></i>
+	                      </a>
+	                    </span>
+   
+               		</li>
+               		<span class="label label-info" style="font-size:10px;">Note</span>: You can also remove environment variables by clicking on <code>&nbsp;-&nbsp;</code> & edit an existing 
+               		environment variable by clicking <code>Edit</code>
+            		
+          		</ol>
+          	  </p>
+
            </div>
         </div><!--/span-->
       </div><!--/row-->
