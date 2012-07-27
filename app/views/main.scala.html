@@ -155,16 +155,16 @@
               <li><a href="#appInfo">View Appication info</a></li>
               <li><a href="#appRename">Renaming an App</a></li>
               <li><a href="#collaborators">Managing Collabortors</a></li>
-              <li><a href	="#transferOwner">Transferring ownership of your App</a></li>
+              <li><a href="#transferOwner">Transferring ownership of your App</a></li>
               <li><a href="#envVars">Managing Environment Variables</a></li>
-              <li><a href="#appDestroy">Destroying an app</a></li>
-              <li><a href="#appProcesses">Viewing Application processes</a></li>
+              <li><a href="#appDestroy">Destroying your App</a></li>
+              <li><a href="#appProcesses">Viewing application processes</a></li>
               <li><a href="#appRestart">Restarting your App</a></li>
-              <li><a href="#appRestart">Restarting processes in your App</a></li>
+              <li><a href="#procRestart">Restarting a specific App processes</a></li>
               <li><a href="#appLogs">Viewing Application logs</a></li>
-              <li><a href="#appLogs">Viewing process specific logs</a></li>
+              <li><a href="#procLogs">Viewing logs for specific App process</a></li>
               <li><a href="#appScale">Scaling your app</a></li>
-              <li><a href="#appScale">Scaling processes in your App</a></li>
+              <li><a href="#procScale">Scaling a specific App process</a></li>
             </ul>
           </div><!--/.well -->
         </div><!--/span-->
@@ -661,7 +661,7 @@
              <p>
             	<ol>
             		<li>If you did not provide a name when creating the application, you can rename your application in the Application 
-            		Info window. Open the App that you want to rename.</li>
+            		Info window. Double click on the Application in the <code>My Heroku Apps</code> view.</li>
             		<li>Go to the <code>Application Info</code> tab</li>
             		<li>Enter a new name for your App and click <code>Rename</code>.<br/><br/>
             		<span class="label label-warn" style="font-size:10px;">Note</span>: The name should beging with a letter and only contain letters, numbers and 
@@ -691,7 +691,7 @@
             		<li>You can share your Heroku App with other developers and collaborate with them on your on your application. The 
             		current owner of the application is indicated by the <img src='@routes.Assets.at("images/app_owner.png")' alt="App Owner" />
             		icon next to the collaborator.
-            		To add a new Collaborator, click on the Application in the <code>My Heroku Apps</code> view.</li>
+            		To add a new Collaborator, double click on the Application in the <code>My Heroku Apps</code> view.</li>
             		<li>Go to the <code>Collaborators</code> tab</li>
             		<li>Click on <code>&nbsp;+&nbsp;</code> & enter the email of the Collaborator<br/>
             		<span class="label label-info" style="font-size:10px;">Note</span>: To remove a collaborator,
@@ -724,7 +724,7 @@
              <p>
             	<ol>
             		<li>You can transfer ownership of your application to a collaborator. Once you transfer ownership, you will not be able to
-            		manage the application when you were the owner. To tranfer ownership,click on the Application in the <code>My Heroku Apps</code> view.</li>
+            		manage the application when you were the owner. To tranfer ownership, double click on the Application in the <code>My Heroku Apps</code> view.</li>
             		<li>Go to the <code>Collaborators</code> tab</li>
             		<li>Click on collaborator that you want to make the new owner</li>
             		<li>Click on <code>Make Owner</code>
@@ -752,7 +752,7 @@
              <p>
             	<ol>
             		<li>It is a best practice to make any resources that your application depends on as environment variables. To add a 
-            		new environment variable, click on the Application in the <code>My Heroku Apps</code> view.</li>
+            		new environment variable, double click on the Application in the <code>My Heroku Apps</code> view.</li>
             		<li>Go to the <code>Environment Variables</code> tab</li>
             		<li>Click on <code>&nbsp;+&nbsp;</code> & enter the environment variable key and value</li>
             		<li>Click <code>Ok</code> to add the environment variable. <br/><br/>
@@ -780,7 +780,269 @@
             		
           		</ol>
           	  </p>
+             <h3 class="subsection-hdr"><a name="preqs" href="#" name="appDestroy" id="appDestroy">Destroying your App</a></h3>
+             <p>
+            	<ol>
+            		<li>Right click on the Application in the <code>My Heroku Apps</code> view.</li>
+            		<li>Click on <code>Destroy</code> [&nbsp;<span class="label label-warning" style="font-size:10px;">Warning</span>: Once you destroy the app you cannot restore
+            			it back without contacting Heroku. Please ensure that you really really want to destroy the App.&nbsp;)
+ 	        			<div class="modal hide" id="destroyApp1">
+	                      <div class="modal-header">
+	                        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
+	                        <h3>Destroy application</h3>
+	                      </div>
+	                      <div class="modal-body">
+	                        <img src='@routes.Assets.at("images/app_destroy.png")' alt="Destroy application" />
+	                      </div>
+	                 	</div>
+	                    <span class="screenshot">
+	                      <a href="#destroyApp1" data-toggle="modal">
+	                        <img src='@routes.Assets.at("images/app_destroy.png")' alt="Destroy application" width="100" />
+	                        <i class="icon-zoom-in"></i>
+	                      </a>
+	                    </span>
+            		</li>
+          		</ol>
+          	  </p>
+             <h3 class="subsection-hdr"><a name="preqs" href="#" name="appProcesses" id="appProcesses">Viewing application processes</a></h3>
+             <p>
+            	<ol>
+            		<li>Heroku apps can support multiple processes that can be managed under that 1 app. To look at the state of the current
+            		processes, Double click on the Application in the <code>My Heroku Apps</code> view.</li>
+            		<li>Go to the <code>Processes</code> tab</li>
+            		<li>This table lists all "running" processeses with the following information
+            			<ul>
+            				<li>
+	            				<span class="label" style="font-size:10px;">Status</span> : If the processes is currently "running" 
+	            				it'll display green, otherwise "red".
+            				</li>
+            				<li>
+            					<span class="label" style="font-size:10px;">Process Type</span> : The name of the processes
+            				</li>
+            				<li>
+            					<span class="label" style="font-size:10px;">Dynos</span> : The current number of dynos executing the process
+            				</li>
+             				<li>
+            					<span class="label" style="font-size:10px;">Command</span> : The command that Heroku uses to start the process
+            				</li>
+            			</ul>
+            			<div class="modal hide" id="appProcesses1">
+	                      <div class="modal-header">
+	                        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
+	                        <h3>View Application processes</h3>
+	                      </div>
+	                      <div class="modal-body">
+	                        <img src='@routes.Assets.at("images/app_processes.png")' alt="Application processes" />
+	                      </div>
+	                 	</div>
+	                    <span class="screenshot">
+	                      <a href="#appProcesses1" data-toggle="modal">
+	                        <img src='@routes.Assets.at("images/app_processes.png")' alt="Application processes" width="100" />
+	                        <i class="icon-zoom-in"></i>
+	                      </a>
+	                    </span>
+            		</li>
+          		</ol>
+          	  </p>
+          	 <h3 class="subsection-hdr"><a name="preqs" href="#" name="appRestart" id="appRestart">Restarting your App</a></h3>
+             <p>
+            	<ol>
+            		<li>Right click on the Application in the <code>My Heroku Apps</code> view.</li>
+            		<li>Click on <code>Restart</code> [&nbsp;<span class="label label-warning" style="font-size:10px;">Warning</span>: Restart will
+            		restart all processes in your application. If you want to restart a specific process refer to 
+            		<a href="#procRestart">Restarting specific process in your App</a>.&nbsp;]
+ 	        			<div class="modal hide" id="appRestart1">
+	                      <div class="modal-header">
+	                        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
+	                        <h3>Restart Application</h3>
+	                      </div>
+	                      <div class="modal-body">
+	                        <img src='@routes.Assets.at("images/app_restart.png")' alt="Restart application" />
+	                      </div>
+	                 	</div>
+	                    <span class="screenshot">
+	                      <a href="#appRestart1" data-toggle="modal">
+	                        <img src='@routes.Assets.at("images/app_restart.png")' alt="Restart application" width="100" />
+	                        <i class="icon-zoom-in"></i>
+	                      </a>
+	                    </span>
+            		</li>
+          		</ol>
+          	  </p>
+          	  <h3 class="subsection-hdr"><a name="preqs" href="#" name="proceRestart" id="proceRestart">Restarting a specific Process in your App</a></h3>
+          	  <p>
+            	<ol>
+            		<li>Double click on the Application in the <code>My Heroku Apps</code> view.</li>
+            		<li>Go to the <code>Processes</code> tab</li>
+            		<li>Click on the Process type that you want to restart</li>
+            		<li>Click on <code>Restart</code>.
+ 	        			<div class="modal hide" id="procRestart1">
+	                      <div class="modal-header">
+	                        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
+	                        <h3>Restart process</h3>
+	                      </div>
+	                      <div class="modal-body">
+	                        <img src='@routes.Assets.at("images/proc_restart.png")' alt="Restart process" />
+	                      </div>
+	                 	</div>
+	                    <span class="screenshot">
+	                      <a href="#procRestart1" data-toggle="modal">
+	                        <img src='@routes.Assets.at("images/proc_restart.png")' alt="Restart process" width="100" />
+	                        <i class="icon-zoom-in"></i>
+	                      </a>
+	                    </span>
+            		</li>
+             		
+          		</ol>
+          	  </p>
+          	  
+          	  
+          	 <!-- Application Logs -->
+          	 <h3 class="subsection-hdr"><a name="preqs" href="#" name="appLogs" id="appLogs">Viewing application logs</a></h3>
+             <p>
+            	<ol>
+            		<li>Right click on the Application in the <code>My Heroku Apps</code> view.</li>
+            		<li>Click on <code>Logs</code>
+ 	        			<div class="modal hide" id="appLogs1">
+	                      <div class="modal-header">
+	                        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
+	                        <h3>Viewing Application logs</h3>
+	                      </div>
+	                      <div class="modal-body">
+	                        <img src='@routes.Assets.at("images/app_logs.png")' alt="Viewing Application logs" />
+	                      </div>
+	                 	</div>
+	                    <span class="screenshot">
+	                      <a href="#appLogs1" data-toggle="modal">
+	                        <img src='@routes.Assets.at("images/app_logs.png")' alt="Viewing Application logs" width="100" />
+	                        <i class="icon-zoom-in"></i>
+	                      </a>
+	                    </span>
+	                    <span class="label label-info" style="font-size:10px;">Note</span>: If you want to toggle 
+	                    between logs for different applications,click on <img src='@routes.Assets.at("images/toggle_logs.png")'/>
+	                    icon and pick the application log you want to view. 
+            		</li>
+          		</ol>
+          	  </p>
+          	  <h3 class="subsection-hdr"><a name="preqs" href="#" name="proceLogs" id="procLogs">Viewing logs for specific App process</a></h3>
+          	  <p>
+            	<ol>
+            		<li>Double click on the Application in the <code>My Heroku Apps</code> view.</li>
+            		<li>Go to the <code>Processes</code> tab</li>
+            		<li>Click on the Process type that you want to view logs for.</li>
+            		<li>Click on <code>Logs</code>.
+ 	        			<div class="modal hide" id="procLogs1">
+	                      <div class="modal-header">
+	                        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
+	                        <h3>Process Logs</h3>
+	                      </div>
+	                      <div class="modal-body">
+	                        <img src='@routes.Assets.at("images/proc_logs.png")' alt="Process logs" />
+	                      </div>
+	                 	</div>
+	                    <span class="screenshot">
+	                      <a href="#procLogs1" data-toggle="modal">
+	                        <img src='@routes.Assets.at("images/proc_logs.png")' alt="Restart process" width="100" />
+	                        <i class="icon-zoom-in"></i>
+	                      </a>
+	                    </span>
+            		</li>
+             		
+          		</ol>
+          	  </p>
+          	  
+         	 <!-- Scaling Applications -->
+          	 <h3 class="subsection-hdr"><a name="preqs" href="#" name="appScale" id="appScale">Scaling your App</a></h3>
+             <p>
+            	<ol>
+            		<li>You can run your application on multiple dynos with a click of a button. Right click on the Application 
+            		in the <code>My Heroku Apps</code> view.</li>
+            		<li>Click on <code>Scale</code>
+ 	        			<div class="modal hide" id="appScale1">
+	                      <div class="modal-header">
+	                        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
+	                        <h3>Scaling your App</h3>
+	                      </div>
+	                      <div class="modal-body">
+	                        <img src='@routes.Assets.at("images/app_scale.png")' alt="Scaling your App" />
+	                      </div>
+	                 	</div>
+	                    <span class="screenshot">
+	                      <a href="#appScale1" data-toggle="modal">
+	                        <img src='@routes.Assets.at("images/app_scale.png")' alt="Scaling your App" width="100" />
+	                        <i class="icon-zoom-in"></i>
+	                      </a>
+	                    </span>
 
+            		</li>
+            		<li>Enter the name of the process you want to scale and the number of dynos you want to scale it to.
+            		 	<div class="modal hide" id="appScale2">
+	                      <div class="modal-header">
+	                        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
+	                        <h3>Scaling your App</h3>
+	                      </div>
+	                      <div class="modal-body">
+	                        <img src='@routes.Assets.at("images/app_scale_1.png")' alt="Scaling your App" />
+	                      </div>
+	                 	</div>
+	                    <span class="screenshot">
+	                      <a href="#appScale2" data-toggle="modal">
+	                        <img src='@routes.Assets.at("images/app_scale_1.png")' alt="Scaling your App" width="100" />
+	                        <i class="icon-zoom-in"></i>
+	                      </a>
+	                    </span>
+            		
+            		
+            		</li>
+            		<li>Click on <code>Ok</code> to scale</li>
+          		</ol>
+          	  </p>
+          	  <h3 class="subsection-hdr"><a name="preqs" href="#" name="proceLogs" id="procLogs">Scaling a specific App process</a></h3>
+          	  <p>
+            	<ol>
+            		<li>Double click on the Application in the <code>My Heroku Apps</code> view.</li>
+            		<li>Go to the <code>Processes</code> tab</li>
+            		<li>Click on the Process type that you want to scale</li>
+            		<li>Click on <code>Scale</code>.
+ 	        			<div class="modal hide" id="procScale1">
+	                      <div class="modal-header">
+	                        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
+	                        <h3>Scaling your process</h3>
+	                      </div>
+	                      <div class="modal-body">
+	                        <img src='@routes.Assets.at("images/proc_scale.png")' alt="Scaling your process" />
+	                      </div>
+	                 	</div>
+	                    <span class="screenshot">
+	                      <a href="#procScale1" data-toggle="modal">
+	                        <img src='@routes.Assets.at("images/proc_scale.png")' alt="Scaling your process" width="100" />
+	                        <i class="icon-zoom-in"></i>
+	                      </a>
+	                    </span>
+            		</li>
+            		<li>Select the number of dynos you want to scale this process.
+            		 	<div class="modal hide" id="appScale2">
+	                      <div class="modal-header">
+	                        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
+	                        <h3>Scaling your App</h3>
+	                      </div>
+	                      <div class="modal-body">
+	                        <img src='@routes.Assets.at("images/app_scale_1.png")' alt="Scaling your App" />
+	                      </div>
+	                 	</div>
+	                    <span class="screenshot">
+	                      <a href="#appScale2" data-toggle="modal">
+	                        <img src='@routes.Assets.at("images/app_scale_1.png")' alt="Scaling your App" width="100" />
+	                        <i class="icon-zoom-in"></i>
+	                      </a>
+	                    </span>
+            		
+            		
+            		</li>
+            		<li>Click on <code>Ok</code> to scale</li>
+             		
+          		</ol>
+          	  </p>          	  
            </div>
         </div><!--/span-->
       </div><!--/row-->
