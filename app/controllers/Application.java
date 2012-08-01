@@ -47,37 +47,46 @@ public class Application extends Controller {
 	private static final SimpleDateFormat MMDDYYYY = new SimpleDateFormat("MMddyyyy");
 	
 	public static Result index() throws JsonProcessingException, IOException {
-		JedisPool pool = poolFactory.getPool();
-	    Jedis jedis = pool.getResource();
-	    Integer installCount=0;
-	    Set<String> requestorIPs = new HashSet<String>();
-	    
-	    try{
-	    	Set<PluginInstallInfo> installs = getInstallsToDate(jedis.hvals(REQUESTOR));
-		    for(PluginInstallInfo install:installs ){
-		    	
-		    	if(!requestorIPs.contains(install.getRequestorIP())){
-		    		requestorIPs.add(install.getRequestorIP());
-		    	}
-		    }
-	    	installCount = requestorIPs.size();
-		}finally{
-			pool.returnResource(jedis);
+	    Integer installCount=-1;
+		try{
+			JedisPool pool = poolFactory.getPool();
+		    Jedis jedis = pool.getResource();
+		    Set<String> requestorIPs = new HashSet<String>();
+		    installCount=0;
+		    try{
+		    	Set<PluginInstallInfo> installs = getInstallsToDate(jedis.hvals(REQUESTOR));
+			    for(PluginInstallInfo install:installs ){
+			    	
+			    	if(!requestorIPs.contains(install.getRequestorIP())){
+			    		requestorIPs.add(install.getRequestorIP());
+			    	}
+			    }
+		    	installCount = requestorIPs.size();
+			}finally{
+				pool.returnResource(jedis);
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
 		}
 		return ok(index.render(String.valueOf(installCount)));
 	}
 	
 	@BodyParser.Of(BodyParser.Json.class)
 	public static Result dailyStats() throws JsonProcessingException, IOException {
-		JedisPool pool = poolFactory.getPool();
-	    Jedis jedis = pool.getResource();
-	    String dailyStats;
-	    
-	    try{
-	    	Set<PluginInstallInfo> installs = getInstallsToDate(jedis.hvals(REQUESTOR));
-		    dailyStats = getDailyInstallStats(installs);
-	    }finally{
-			pool.returnResource(jedis);
+	    String dailyStats="";
+		try{
+			JedisPool pool = poolFactory.getPool();
+		    Jedis jedis = pool.getResource();
+		    
+		    try{
+		    	Set<PluginInstallInfo> installs = getInstallsToDate(jedis.hvals(REQUESTOR));
+			    dailyStats = getDailyInstallStats(installs);
+		    }finally{
+				pool.returnResource(jedis);
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+			
 		}
 		return ok(dailyStats);
 	}
