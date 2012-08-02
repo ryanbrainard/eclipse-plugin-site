@@ -4,7 +4,6 @@ import dto.PluginInstallInfo;
 import dto.PluginInstallStat;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ObjectNode;
@@ -13,6 +12,7 @@ import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisCommands;
 import redis.clients.jedis.JedisPool;
 import utils.JedisPoolFactory;
 import views.html.index;
@@ -33,14 +33,44 @@ public class Application extends Controller {
     private static final String USER_AGENT = "USER-AGENT";
     private static final SimpleDateFormat MMDDYYYY = new SimpleDateFormat("MMddyyyy");
 
-    public static Result index() throws JsonProcessingException, IOException {
-        Integer installCount = -1;
+    static interface JedisRunnable<V> {
+        V without();
+
+        V with(JedisCommands jedis) throws IOException;
+    }
+
+    static <V> V withRedis(JedisRunnable<V> runnable) {
+        JedisPool pool = poolFactory.getPool();
+
+        if (pool == null) {
+            return runnable.without();
+        }
+
+        Jedis jedis = pool.getResource();
+
+        if (jedis == null) {
+            return runnable.without();
+        }
+
         try {
-            JedisPool pool = poolFactory.getPool();
-            Jedis jedis = pool.getResource();
-            Set<String> requestorIPs = new HashSet<String>();
-            installCount = 0;
-            try {
+            return runnable.with(jedis);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            pool.returnResource(jedis);
+        }
+    }
+
+    public static Result index() throws IOException {
+        final Integer installCount = withRedis(new JedisRunnable<Integer>() {
+            @Override
+            public Integer without() {
+                return -1;
+            }
+
+            @Override
+            public Integer with(JedisCommands jedis) throws IOException {
+                Set<String> requestorIPs = new HashSet<String>();
                 Set<PluginInstallInfo> installs = getInstallsToDate(jedis.hvals(REQUESTOR));
                 for (PluginInstallInfo install : installs) {
 
@@ -48,92 +78,84 @@ public class Application extends Controller {
                         requestorIPs.add(install.getRequestorIP());
                     }
                 }
-                installCount = requestorIPs.size();
-            } finally {
-                pool.returnResource(jedis);
+                return requestorIPs.size();
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        });
+
         return ok(index.render((String.valueOf(installCount))));
     }
 
     @BodyParser.Of(BodyParser.Json.class)
-    public static Result dailyStats() throws JsonProcessingException, IOException {
-        String dailyStats = "";
-        try {
-            JedisPool pool = poolFactory.getPool();
-            Jedis jedis = pool.getResource();
-
-            try {
-                Set<PluginInstallInfo> installs = getInstallsToDate(jedis.hvals(REQUESTOR));
-                dailyStats = getDailyInstallStats(installs);
-            } finally {
-                pool.returnResource(jedis);
+    public static Result dailyStats() throws IOException {
+        final String dailyStats = withRedis(new JedisRunnable<String>() {
+            @Override
+            public String without() {
+                return "";
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
 
-        }
+            @Override
+            public String with(JedisCommands jedis) throws IOException {
+                Set<PluginInstallInfo> installs = getInstallsToDate(jedis.hvals(REQUESTOR));
+                return getDailyInstallStats(installs);
+            }
+        });
+
         return ok(dailyStats);
     }
 
     @BodyParser.Of(BodyParser.Json.class)
     public static Result installCount() {
-        JedisPool pool = poolFactory.getPool();
-        Jedis jedis = pool.getResource();
-        Integer installCount = 0;
-        ObjectNode result = Json.newObject();
-        try {
-            installCount = Integer.valueOf(jedis.get(PLUGIN_INSTALL_COUNT));
-            result.put("installCount", installCount);
-        } finally {
-            pool.returnResource(jedis);
-        }
-        return ok(result);
+        final Integer installCount = withRedis(new JedisRunnable<Integer>() {
+            @Override
+            public Integer without() {
+                return 0;
+            }
 
+            @Override
+            public Integer with(JedisCommands jedis) throws IOException {
+                return Integer.valueOf(jedis.get(PLUGIN_INSTALL_COUNT));
+            }
+        });
+
+        ObjectNode result = Json.newObject();
+        result.put("installCount", installCount);
+        return ok(result);
     }
 
-    public static Result install(String relFilePath) {
+    public static Result install(final String relFilePath) {
+        withRedis(new JedisRunnable<Void>() {
+            @Override
+            public Void without() {
+                return null;
+            }
 
-        JedisPool pool = poolFactory.getPool();
-        Jedis jedis = pool.getResource();
-        try {
-            if (relFilePath.equalsIgnoreCase(FILE_TO_MATCH)) {
-                jedis.incr(PLUGIN_INSTALL_COUNT);
-                PluginInstallInfo installInfo = new PluginInstallInfo(new Date().getTime(),
-                        request().headers().get(X_FORWARDED_FOR)[0],
-                        request().headers().get(USER_AGENT)[0]);
-                ObjectMapper mapper = new ObjectMapper();
-                ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
-                try {
+            @Override
+            public Void with(JedisCommands jedis) throws IOException {
+                if (relFilePath.equalsIgnoreCase(FILE_TO_MATCH)) {
+                    jedis.incr(PLUGIN_INSTALL_COUNT);
+                    PluginInstallInfo installInfo = new PluginInstallInfo(new Date().getTime(),
+                            request().headers().get(X_FORWARDED_FOR)[0],
+                            request().headers().get(USER_AGENT)[0]);
+                    ObjectMapper mapper = new ObjectMapper();
+                    ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
                     mapper.writeValue(byteOut, installInfo);
                     jedis.hset(REQUESTOR,
                             java.util.UUID.randomUUID().toString(),
                             new String(byteOut.toByteArray()));
-                } catch (JsonGenerationException e) {
-                    System.out.println(String.format("install-error %s", e.getMessage()));
-                    e.printStackTrace();
-                } catch (JsonMappingException e) {
-                    System.out.println(String.format("install-error %s", e.getMessage()));
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    System.out.println(String.format("install-error %s", e.getMessage()));
-                    e.printStackTrace();
                 }
-            }
-            String absFilePath = "release" + File.separatorChar + relFilePath;
-            System.out.println(String.format("install %s", absFilePath));
-            File file = new File(absFilePath);
-            if (file.exists()) {
-                return status(200, file);
-            } else {
-                return notFound(absFilePath);
-            }
-        } finally {
-            pool.returnResource(jedis);
-        }
 
+                return null;
+            }
+        });
+
+        String absFilePath = "release" + File.separatorChar + relFilePath;
+        System.out.println(String.format("install %s", absFilePath));
+        File file = new File(absFilePath);
+        if (file.exists()) {
+            return status(200, file);
+        } else {
+            return notFound(absFilePath);
+        }
     }
 
     private static Set<PluginInstallInfo> getInstallsToDate(List<String> redisData) throws JsonParseException, JsonMappingException, IOException {
