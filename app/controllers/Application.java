@@ -94,12 +94,12 @@ public class Application extends Controller {
 
     }
 
-    public static Result install(String file) {
+    public static Result install(String relFilePath) {
 
         JedisPool pool = poolFactory.getPool();
         Jedis jedis = pool.getResource();
         try {
-            if (file.equalsIgnoreCase(FILE_TO_MATCH)) {
+            if (relFilePath.equalsIgnoreCase(FILE_TO_MATCH)) {
                 jedis.incr(PLUGIN_INSTALL_COUNT);
                 PluginInstallInfo installInfo = new PluginInstallInfo(new Date().getTime(),
                         request().headers().get(X_FORWARDED_FOR)[0],
@@ -122,10 +122,10 @@ public class Application extends Controller {
                     e.printStackTrace();
                 }
             }
-            String absFilePath = "release" + File.separatorChar + file;
+            String absFilePath = "release" + File.separatorChar + relFilePath;
             System.out.println(String.format("install %s", absFilePath));
-            File theFile = new File(absFilePath);
-            if (theFile.exists()) {
+            File file = new File(absFilePath);
+            if (file.exists()) {
                 return status(200, file);
             } else {
                 return notFound(absFilePath);
