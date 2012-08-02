@@ -15,6 +15,7 @@ import play.mvc.Result;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import utils.JedisPoolFactory;
+import views.html.index;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -54,7 +55,7 @@ public class Application extends Controller {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return ok(index.render(String.valueOf(installCount)));
+        return ok(index.render((String.valueOf(installCount))));
     }
 
     @BodyParser.Of(BodyParser.Json.class)
