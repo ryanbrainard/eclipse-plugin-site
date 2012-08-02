@@ -121,12 +121,11 @@ public class Application extends Controller {
                     e.printStackTrace();
                 }
             }
-            String absFilePath = "releases" + File.separatorChar + "v0.1.0-SNAPSHOT" + File.separatorChar + file;
+            String absFilePath = "release" + File.separatorChar + file;
             System.out.println(String.format("install %s", absFilePath));
             File theFile = new File(absFilePath);
             if (theFile.exists()) {
-                return status(200, new File("releases" + File.separatorChar
-                        + "v0.1.0-SNAPSHOT" + File.separatorChar + file));
+                return status(200, file);
             } else {
                 return notFound(absFilePath);
             }
