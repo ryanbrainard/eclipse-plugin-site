@@ -2,9 +2,6 @@ package controllers;
 
 import dto.PluginInstallInfo;
 import dto.PluginInstallStat;
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ObjectNode;
 import play.libs.Json;
@@ -158,7 +155,7 @@ public class Application extends Controller {
         }
     }
 
-    private static Set<PluginInstallInfo> getInstallsToDate(List<String> redisData) throws JsonParseException, JsonMappingException, IOException {
+    private static Set<PluginInstallInfo> getInstallsToDate(List<String> redisData) throws IOException {
 
         List<PluginInstallInfo> retList = new ArrayList<PluginInstallInfo>();
         TreeSet<PluginInstallInfo> sortestList = new TreeSet<PluginInstallInfo>(new Comparator<PluginInstallInfo>() {
@@ -184,7 +181,7 @@ public class Application extends Controller {
 
     }
 
-    private static String getDailyInstallStats(Set<PluginInstallInfo> installs) throws JsonGenerationException, JsonMappingException, IOException {
+    private static String getDailyInstallStats(Set<PluginInstallInfo> installs) throws IOException {
 
         Map<String, PluginInstallStat> dailyStats = new HashMap<String, PluginInstallStat>();
         PluginInstallStat stat;
